@@ -1,0 +1,21 @@
+:host {
+  border-right: 1px solid #e5e5e5;
+  overflow-y: hidden;
+  &:hover {
+    overflow-y: auto;
+  }
+  .sub-nav-button {
+    width: 100%;
+    box-shadow: none;
+    height: 48px;
+    border-radius: 0;
+    text-align: left;
+    transition: all 0.15s ease-in;
+    &:active {
+      box-shadow: none;
+    }
+    &:hover {
+      background-color: var(--btn-hover-color);
+    }
+  }
+}

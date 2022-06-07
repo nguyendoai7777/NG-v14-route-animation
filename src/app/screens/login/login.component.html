@@ -1,0 +1,19 @@
+<hr>
+<ng-container [formGroup]="loginForm">
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email address</label>
+    <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+    <ng-container *ngIf="getLoginForm?.email?.invalid && getLoginForm?.email?.dirty || getLoginForm?.email?.touched">
+      <div
+        *ngIf="getLoginForm.email?.errors?.['required']"
+        id="emailHelp" class="form-text text-danger"
+      >This is required.</div>
+      <div
+        *ngIf="getLoginForm.email?.errors?.['forbiddenName']"
+        id="s" class="form-text text-danger"
+      >{{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' +getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}</div>
+    </ng-container>
+  </div>
+</ng-container>
+

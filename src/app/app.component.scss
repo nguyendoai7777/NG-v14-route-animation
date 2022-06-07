@@ -1,0 +1,55 @@
+@mixin transitionBodyBase {
+  transition: all 0.15s ease;
+  height: 100%;
+}
+
+.appbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
+  .mapping- {
+    &left {
+      width: 224px;
+    }
+    &right {
+      width: calc(100% - 224px);
+    }
+  }
+  .nav-selected {
+    background: rgba(0,0,0,.2);
+  }
+}
+.body {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: calc(100vh - 64px);
+  display: flex;
+  .sidebar {
+    display: block;
+    width: 240px;
+    background: #fff;
+    position: relative;
+    z-index: 1;
+    @include transitionBodyBase;
+  }
+  .content-box {
+    width: calc(100% - 240px);
+    @include transitionBodyBase;
+    position: relative;
+    z-index: 0;
+  }
+  &.expand {
+    .sidebar {
+      width: 0;
+    }
+    .content-box {
+      width: 100%;
+    }
+  }
+}

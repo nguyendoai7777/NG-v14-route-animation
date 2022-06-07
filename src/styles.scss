@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'src/assets/styles/settings/vars.scss';
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+a.default {
+  color: unset;
+}
+
+.scroll-rebuild {
+  &::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,.26);
+  }
+}
