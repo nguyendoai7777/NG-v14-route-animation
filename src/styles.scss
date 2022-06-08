@@ -18,3 +18,15 @@ a.default {
     background: rgba(0,0,0,.26);
   }
 }
+
+button {
+  cursor: pointer;
+}
+
+.disabled {
+  cursor: not-allowed !important;
+}
+
+.border-accent-color {
+  border-color: var(--accent-color) !important;
+}

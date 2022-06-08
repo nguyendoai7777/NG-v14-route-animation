@@ -19,4 +19,16 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  alo() {
+    console.log('alo');
+  }
+
+  onAuxClick() {
+    console.log('aux');
+  }
+
+  onContextMenuClick(e: MouseEvent) {
+    e.preventDefault();
+    console.log(e)
+  }
 }

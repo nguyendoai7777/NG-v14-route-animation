@@ -1,19 +1,65 @@
 <hr>
 <ng-container [formGroup]="loginForm">
-
+  <pre>state: {{getLoginForm.email.errors?.['forbiddenName'] | json}}</pre>
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email address</label>
-    <input formControlName="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <ng-container *ngIf="getLoginForm?.email?.invalid && getLoginForm?.email?.dirty || getLoginForm?.email?.touched">
-      <div
-        *ngIf="getLoginForm.email?.errors?.['required']"
-        id="emailHelp" class="form-text text-danger"
-      >This is required.</div>
-      <div
-        *ngIf="getLoginForm.email?.errors?.['forbiddenName']"
-        id="s" class="form-text text-danger"
-      >{{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' +getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}</div>
-    </ng-container>
+    <mat-form-field appearance="fill">
+      <mat-label>Email (Gmail)</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        [errorStateMatcher]="matcher"
+        placeholder="Ex. pat@gmail.com">
+      <mat-error class="text-nowrap" *ngIf="getLoginForm.email.hasError('invalid') && !getLoginForm.email.hasError('required')">
+        Invalid mail format. (ex@example.com)
+      </mat-error>
+      <mat-error *ngIf="getLoginForm.email.hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+
+      <mat-error
+        *ngIf="getLoginForm.email.hasError('forbiddenName')"
+        id="s"
+      >{{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' +getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}</mat-error>
+      <!--<ng-container *ngIf="getLoginForm?.email?.invalid && getLoginForm?.email?.dirty || getLoginForm?.email?.touched">
+        <mat-error
+          *ngIf="getLoginForm.email?.errors?.['required']"
+          id="emailHelp" class="form-text text-danger"
+        >This is required.</mat-error>
+        <mat-error
+          *ngIf="getLoginForm.email?.errors?.['forbiddenName']"
+          id="s" class="form-text text-danger"
+        >{{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' +getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}</mat-error>
+      </ng-container>-->
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+        [errorStateMatcher]="matcher"
+      >
+      <mat-error *ngIf="getLoginForm.password.hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+
+    </mat-form-field>
   </div>
+  <button
+    [disabled]="loginForm.invalid"
+    [ngClass]="{
+      'border-accent-color': !loginForm.invalid,
+      'disabled': loginForm.invalid
+    }"
+    mat-stroked-button color="accent"
+    (click)="onSubmit()"
+  >Submit</button>
 </ng-container>
 
+<mat-tab-group>
+  <mat-tab label="First"></mat-tab>
+  <mat-tab label="Second"></mat-tab>
+  <mat-tab label="Third"></mat-tab>
+</mat-tab-group>

@@ -1,5 +1,11 @@
-<button
-  mat-raised-button
-  class="sub-nav-button"
-  *ngFor="let x of [1,2,3,4,5,6,7,8,9,9,0,5,4,4,4,4,4,4,4,4,4,4,4]"
->Tab</button>
+<a
+  class="default"
+  (auxclick)="onAuxClick()"
+  (click)="alo()"
+  (contextmenu)="onContextMenuClick($event)"
+>
+  <button
+    mat-raised-button
+    class="sub-nav-button"
+  >Tab</button>
+</a>
