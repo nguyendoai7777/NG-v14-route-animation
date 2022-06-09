@@ -17,12 +17,7 @@ import { MatInputModule } from "@angular/material/input";
 export interface LoginFormType {
   email: FormControl<string>;
   password: FormControl<string>;
-}
-
-function customValidatorMail(): ValidatorFn {
-  return (control: AbstractControl): ValidationErrors | null => {
-    return /bob/gi.test(control.value) ? { 'invalidMail': true } : null;
-  }
+  description: FormControl<string>;
 }
 
 interface ErrorEmail {
@@ -46,13 +41,12 @@ export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
     return forbidden ? { forbiddenName: { value: control.value, errorText: 'Invalid Format' } } : null;
   };
 }
-const REGEX = /^[a-zA-Z_]+[a-zA-Z\d._]*@[a-zA-Z]{2,}(.([a-zA-Z]{2,7})){1,4}$/gi;
+const REGEX = /^[a-zA-Z_]+[a-zA-Z\d._]*@[a-zA-Z]{2,}(.([a-zA-Z]{2,7})){1,4}$/i;
 
 export function mailFormatValidator(nameRe: RegExp): ValidatorFn {
   return (control: AbstractControl): ErrorEmail | null => {
     const invalid = !nameRe.test(control.value);
-    console.log('match: ', control.value, ' ', nameRe.test(control.value));
-    return !invalid ? { invalid } : null;
+    return invalid ? { invalid } : null;
   };
 }
 
@@ -89,17 +83,19 @@ export class LoginComponent implements OnInit {
         forbiddenNameValidator(/bob/gi)
       ]),
       password: this.fb.nonNullable.control('', [Validators.required]),
+      description: this.fb.nonNullable.control('')
     });
 
-    this.loginForm.controls.email.valueChanges.subscribe(e => {
-       console.log('state: ', e, ' ',REGEX.test(e));
-    })
+    this.loginForm.controls.description.valueChanges.subscribe(e => {
+      this.loginForm.controls.description.setValue(e.replace(/\n/gmi, ''), { emitEvent: false });
+    });
+
+
   }
   onSubmit(): void {
     if(this.loginForm.invalid) {
       return;
     }
-    console.log(this.loginForm.invalid)
   }
   get getLoginForm() {
     return this.loginForm.controls;
