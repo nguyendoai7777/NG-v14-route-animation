@@ -1,0 +1,17 @@
+{
+  "name": "wt-fuzzy-search",
+  "version": "3.2.1",
+  "module": "./wt-fuzzy-search.mjs",
+  "type": "module",
+  "typings": "./index.d.ts",
+  "description": "base on fuzzy-search with types wrapper",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wouter2203/fuzzy-search.git"
+  },
+  "sourceCode": "https://github.com/wouter2203/fuzzy-search",
+  "references": "https://github.com/wouter2203/fuzzy-search",
+  "homepage": "https://github.com/wouter2203/fuzzy-search#readme",
+  "author": "Wouter Rutgers"
+}

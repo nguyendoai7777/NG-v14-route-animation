@@ -22,7 +22,14 @@ bootstrapApplication(AppComponent, {
         loadComponent: () => import('src/app/screens/ios-date-picker/ios-date-picker.component').then(c => c.IosDatePickerComponent),
         data: { state: 'ios-picker' }
       },
-    ]), BrowserAnimationsModule)
+      {
+        path: 'fuzzyyyy',
+        loadComponent: () => import('src/app/screens/fuzzy-search/fuzzy-search.component').then(c => c.FuzzySearchComponent),
+        data: { state: 'fuzzyyyy' }
+      },
+    ]),
+      BrowserAnimationsModule
+    )
   ]
 }).then((_) => {
 

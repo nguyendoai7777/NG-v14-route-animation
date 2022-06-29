@@ -1,0 +1,21 @@
+Fuzzy $earch:
+<mat-form-field appearance="fill">
+  <mat-label>Search</mat-label>
+  <input
+    type="email"
+    matInput
+    autocomplete="off"
+    [(ngModel)]="searchText"
+    (input)="onSearchText()"
+  >
+</mat-form-field>
+<pre>{{searchText}}</pre>
+<a>
+  <mat-nav-list class="country-list">
+    <a mat-list-item *ngFor="let code of result">
+      <span mat-line>{{ code.name }}</span>
+      <span mat-line>{{ code.dial_code }}</span>
+    </a>
+  </mat-nav-list>
+
+</a>

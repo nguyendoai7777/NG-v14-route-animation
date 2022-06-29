@@ -1,6 +1,6 @@
 <hr>
 <ng-container [formGroup]="loginForm">
-  <pre>state: {{getLoginForm.email.errors?.['forbiddenName'] | json}}</pre>
+  <pre>state: {{phone | phoneNumberFormat: '10'}}</pre>
   <div class="mb-3">
     <mat-form-field appearance="fill">
       <mat-label>Email (Gmail)</mat-label>
@@ -10,27 +10,21 @@
         formControlName="email"
         [errorStateMatcher]="matcher"
         placeholder="Ex. pat@gmail.com">
-      <mat-error class="text-nowrap" *ngIf="getLoginForm.email.hasError('invalid') && !getLoginForm.email.hasError('required')">
+      <mat-error
+        class="text-nowrap"
+        *ngIf="getLoginForm.email.hasError('invalid') && !getLoginForm.email.hasError('required')"
+      >
         Invalid mail format. (ex@example.com)
       </mat-error>
       <mat-error *ngIf="getLoginForm.email.hasError('required')">
         Email is <strong>required</strong>
       </mat-error>
-
       <mat-error
         *ngIf="getLoginForm.email.hasError('forbiddenName')"
         id="s"
-      >{{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' +getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}</mat-error>
-      <!--<ng-container *ngIf="getLoginForm?.email?.invalid && getLoginForm?.email?.dirty || getLoginForm?.email?.touched">
-        <mat-error
-          *ngIf="getLoginForm.email?.errors?.['required']"
-          id="emailHelp" class="form-text text-danger"
-        >This is required.</mat-error>
-        <mat-error
-          *ngIf="getLoginForm.email?.errors?.['forbiddenName']"
-          id="s" class="form-text text-danger"
-        >{{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' +getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}</mat-error>
-      </ng-container>-->
+      >
+        {{getLoginForm.email?.errors?.['forbiddenName']?.['value'] + ' is ' + getLoginForm.email?.errors?.['forbiddenName']?.['errorText']}}
+      </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
@@ -43,6 +37,9 @@
       >
       <mat-error *ngIf="getLoginForm.password.hasError('required')">
         Password is <strong>required</strong>
+      </mat-error>
+      <mat-error *ngIf="getLoginForm.password.hasError('minlength') ">
+        Password min length is 8 characters.
       </mat-error>
 
     </mat-form-field>
@@ -64,7 +61,8 @@
     }"
     mat-stroked-button color="accent"
     (click)="onSubmit()"
-  >Submit</button>
+  >Submit
+  </button>
 </ng-container>
 
 <mat-tab-group>

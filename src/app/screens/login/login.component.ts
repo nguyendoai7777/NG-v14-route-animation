@@ -13,6 +13,7 @@ import { MatTabsModule } from "@angular/material/tabs";
 import { MatButtonModule } from "@angular/material/button";
 import { ErrorStateMatcher } from "@angular/material/core";
 import { MatInputModule } from "@angular/material/input";
+import { PhoneNumberFormatPipe } from "../../tools/pipes/phonenumber-format.pipe";
 
 export interface LoginFormType {
   email: FormControl<string>;
@@ -35,13 +36,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
-export function forbiddenNameValidator(nameRe: RegExp): ValidatorFn {
-  return (control: AbstractControl): ErrorEmail | null => {
-    const forbidden = nameRe.test(control.value);
-    return forbidden ? { forbiddenName: { value: control.value, errorText: 'Invalid Format' } } : null;
-  };
-}
 const REGEX = /^[a-zA-Z_]+[a-zA-Z\d._]*@[a-zA-Z]{2,}(.([a-zA-Z]{2,7})){1,4}$/i;
+const REGEX_PASSWORD = /^$/i;
 
 export function mailFormatValidator(nameRe: RegExp): ValidatorFn {
   return (control: AbstractControl): ErrorEmail | null => {
@@ -50,6 +46,12 @@ export function mailFormatValidator(nameRe: RegExp): ValidatorFn {
   };
 }
 
+export function passwordValidator(nameRe: RegExp): ValidatorFn {
+  return (control: AbstractControl): ErrorEmail | null => {
+    const invalid = !nameRe.test(control.value);
+    return invalid ? { invalid } : null;
+  };
+}
 
 @Component({
   selector: 'app-login',
@@ -59,7 +61,8 @@ export function mailFormatValidator(nameRe: RegExp): ValidatorFn {
     ReactiveFormsModule,
     MatTabsModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    PhoneNumberFormatPipe
   ],
   providers: [
     FormBuilder
@@ -70,24 +73,26 @@ export function mailFormatValidator(nameRe: RegExp): ValidatorFn {
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup<LoginFormType>;
   matcher = new MyErrorStateMatcher();
+  phone = '0336224228';
   constructor(
     private readonly fb: FormBuilder,
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group<LoginFormType>({
       email: this.fb.nonNullable.control('', [
         Validators.required,
-        mailFormatValidator( REGEX),
-        forbiddenNameValidator(/bob/gi)
+        mailFormatValidator(REGEX)
       ]),
-      password: this.fb.nonNullable.control('', [Validators.required]),
+      password: this.fb.nonNullable.control('', [
+        Validators.required,
+        Validators.minLength(8)
+      ]),
       description: this.fb.nonNullable.control('')
     });
 
-    this.loginForm.controls.description.valueChanges.subscribe(e => {
-      this.loginForm.controls.description.setValue(e.replace(/\n/gmi, ''), { emitEvent: false });
+    this.getLoginForm.description.valueChanges.subscribe(e => {
+      this.getLoginForm.description.setValue(e.replace(/\n/gmi, ''), { emitEvent: false });
     });
 
 
@@ -102,3 +107,4 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
